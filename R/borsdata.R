@@ -1,13 +1,3 @@
-library(httr)
-library(jsonlite)
-library(dplyr)
-library(stringr)
-library(devtools)
-library(roxygen2)
-
-
-key<-"<API KEY>"
-
 # branches
 fetch_branches<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
