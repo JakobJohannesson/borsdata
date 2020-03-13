@@ -32,7 +32,7 @@ För att använda Börsdatas API behöver du ha en API nyckel. Denna kan du hitt
 key <- "<API KEY>"
 ```
 
-Genom denna API kan du hämta bland annat aktiekurser för alla norska, svenska, danska och finska bolag. En av lillämpningarna är att skapa en korrelationsmatis mellan olika bolag.
+Genom denna API kan du hämta bland annat aktiekurser för alla norska, svenska, danska och finska bolag. En av tillämpningarna är att skapa en korrelationsmatis mellan olika bolag.
 
 ```r
 # Instruments innehåller alla aktier
