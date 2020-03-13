@@ -26,11 +26,14 @@ library(borsdata)
 # ange din API nyckel
 key <- "<API KEY>"
 
-### Tillämpningar
+### Tillämpningar - Korrelationsmatris mellan olika bolag
+
 
 # Instruments innehåller alla aktier
 instruments <- fetch_instruments(key = key)
 Sys.sleep(0.5)
+
+# ERROR: Could not resolve host: apiservice.borsdata.se - Du saknar internet
 
 
 
@@ -43,6 +46,7 @@ Sys.sleep(0.6)
 bahnhof_kurs <- fetch_stockprice(id = 520, key = key)
 Sys.sleep(0.6)
 balder_kurs <- fetch_stockprice(id = 83, key = key)
+
 
 #Bahnhof saknar kursen för någon dag, tar bort första värdet från alla andra.
 balder_kurs <- balder_kurs[-1, ]
