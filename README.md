@@ -57,7 +57,7 @@ frame <-
 colnames(frame) <- c("JM", "Systemair", "Balder")
 ```
 
-Visualisering resultatet i en korrelationsmatris. Finns en rad olika visualiseringar, se figurerna nedan.
+Visualisering resultatet i en korrelationsmatris. Finns en rad olika visualiseringar. 
 
 ```r
 install.packages("GGally") # om du inte redan har installerat GGally.
@@ -75,7 +75,7 @@ ggcorr(frame,
 # tar fram yttligare en korrelationsmatris
 ggpairs(
   data = frame,
-  mapping = 1:4,
+  mapping = 1:3,
   axisLabels = "internal",
   upper = list(continuous = "cor"),
   title = "Korrelationsmatris mellan bolag"
@@ -85,4 +85,4 @@ ggpairs(
 
 ```
 
-![Korrelationsmatris](https://www.github.com/JakobJohannesson/borsdata/tree/master/vignettes/korrelationsmatris.png?raw=true)
+Vill du se mer visualiseringar som är möjliga med datamaterialet? Se min guide till ggplot2 här: https://www.jakobj.se/2020/03/11/ggplot2/
