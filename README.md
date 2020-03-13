@@ -8,11 +8,12 @@ Läs RMD filen under vignettes för mer information om hur du använder paketet
 devtools::install_github('jakobjohannesson/borsdata')
 ```
 
+### Använd dig av Börsdatas API. Se exempelkod nedan!
 
-### Använd dig av börsdatas API. Se exempelkod nedan!
+
+Paket som krävs för att använda dig av tjänsten:
 
 ```r
-
 # Om du inte har paketen installera paketen genom:
 install.packages(c("httr","jsonlite","dplyr", "stringr"))
 
@@ -22,55 +23,53 @@ library(jsonlite)
 library(dplyr)
 library(stringr)
 library(borsdata)
+```
 
-# Ange din API nyckel - Kräver pro medlemskap hos börsdata.se
+För att använda Börsdatas API behöver du ha en API nyckel. Denna kan du hitta under din sida på börsdata.se, följ länken: https://borsdata.se/info/api/api_info
+
+```r
+# ange din API nyckel
 key <- "<API KEY>"
+```
 
-### Tillämpningar - Korrelationsmatris mellan olika bolag
+Genom denna API kan du hämta bland annat aktiekurser för alla norska, svenska, danska och finska bolag. En av lillämpningarna är att skapa en korrelationsmatis mellan olika bolag.
 
-
+```r
 # Instruments innehåller alla aktier
 instruments <- fetch_instruments(key = key)
-Sys.sleep(0.5)
+```
 
-# ERROR: Could not resolve host: apiservice.borsdata.se - Du saknar internet
+Om du får "ERROR: Could not resolve host: apiservice.borsdata.se", då saknar du internet. Andra möjliga fel är att du kontaktar servern för ofta. Från instruments hämtas aktiekurser för olika bolag, använder Systemair, JM och Balder som exempel nedan.
 
-
-
-### Hämtar aktiekurser för olika bolag, använd id från instruments
-
+```r
 systemair_kurs <- fetch_stockprice(id = 221, key = key)
-Sys.sleep(0.6) # Använder Sys.sleep för att undvika att pinga börsdatas servrar för snabbt
+Sys.sleep(0.6)
 jm_kurs <- fetch_stockprice(id = 116, key = key)
 Sys.sleep(0.6)
-bahnhof_kurs <- fetch_stockprice(id = 520, key = key)
-Sys.sleep(0.6)
 balder_kurs <- fetch_stockprice(id = 83, key = key)
+```
 
+Använder Sys.sleep(0.6), för att inte pinga servern för ofta. Om servern får alla förfrågningar samtidigt så kommer API:n inte att returnera de aktiekurserna som vi efterfrågar. Slår samman aktiekurserna till en och samma data.frame
 
-#Bahnhof saknar kursen för någon dag, tar bort första värdet från alla andra.
-balder_kurs <- balder_kurs[-1, ]
-systemair_kurs <- systemair_kurs[-1, ]
-jm_kurs <- jm_kurs[-1, ]
-
-### Kurserna sammanslagna till en data frame
-
+```r
 frame <-
-  data.frame(jm_kurs$c, systemair_kurs$c, bahnhof_kurs$c, balder_kurs$c)
-colnames(frame) <- c("JM", "Systemair", "Bahnhof", "Balder")
+  data.frame(jm_kurs$c, systemair_kurs$c, balder_kurs$c)
+colnames(frame) <- c("JM", "Systemair", "Balder")
+```
 
-#### Visualisering - Korrelationsmatris ####
-# install.packages("GGally") # om du saknar paketet GGally
+Visualisering resultatet i en korrelationsmatris. Finns en rad olika visualiseringar, se figurerna nedan.
+
+```r
+install.packages("GGally") # om du inte redan har installerat GGally.
 library(GGally)
+
+
 ggpairs(frame)
 
-(m <-
-    ggcorr(
-      frame,
+ggcorr(frame,
       method = c("pairwise", "pearson"),
       label = TRUE,
-      digits = 2
-    ))
+      digits = 2)
 
 
 # tar fram yttligare en korrelationsmatris
@@ -83,4 +82,7 @@ ggpairs(
 ) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
+
 ```
+
+![Korrelationsmatris](https://www.github.com/JakobJohannesson/borsdata/tree/master/vignettes/korrelationsmatris.png?raw=true)
