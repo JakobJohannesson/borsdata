@@ -12,7 +12,7 @@ fetch_branches<-function(key=key){
 }
 
 # countries
-fetch_countries<-function(key){
+fetch_countries<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/countries"
@@ -25,7 +25,7 @@ fetch_countries<-function(key){
 }
 
 # markets
-fetch_markets<-function(key){
+fetch_markets<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/markets"
@@ -38,7 +38,7 @@ fetch_markets<-function(key){
 }
 
 # sectors
-fetch_sectors<-function(key){
+fetch_sectors<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/sectors"
@@ -53,7 +53,7 @@ fetch_sectors<-function(key){
 
 # Instruments
 
-fetch_instruments<-function(key){
+fetch_instruments<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/instruments" # Instruments
@@ -67,7 +67,7 @@ fetch_instruments<-function(key){
 
 # Instruments updated
 
-fetch_updated_instruments<-function(key){
+fetch_updated_instruments<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/instruments/updated" # Instruments updated
@@ -81,7 +81,7 @@ fetch_updated_instruments<-function(key){
 
 # Reports
 
-fetch_year<-function(id,key){
+fetch_year<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
@@ -91,7 +91,7 @@ fetch_year<-function(id,key){
   return(df$reportsYear)
 }
 
-fetch_r12<-function(id,key){
+fetch_r12<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
@@ -101,7 +101,7 @@ fetch_r12<-function(id,key){
   return(df$reportsR12)
 }
 
-fetch_quarter<-function(id,key){
+fetch_quarter<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
@@ -113,7 +113,7 @@ fetch_quarter<-function(id,key){
 
 # Stock Prices
 
-fetch_stockprice<-function(id,key){
+fetch_stockprice<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   kurs_endpoint <- paste0("/v1/instruments/", id,"/stockprices")
@@ -126,7 +126,7 @@ fetch_stockprice<-function(id,key){
 
 # Stock Prices last
 
-fetch_stockprice_last<-function(key){
+fetch_stockprice_last<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   kurs_endpoint <- paste0("/v1/instruments/","/stockprices/last")
@@ -139,7 +139,7 @@ fetch_stockprice_last<-function(key){
 
 # Stock splits
 
-fetch_stocksplits<-function(key){
+fetch_stocksplits<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   kurs_endpoint <- paste0("/v1/instruments/","stocksplits")
