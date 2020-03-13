@@ -28,11 +28,13 @@ key <- "<API KEY>"
 
 ### Tillämpningar
 
+# Instruments innehåller alla aktier
 instruments <- fetch_instruments(key = key)
 Sys.sleep(0.5)
 
 
-### Hämtar aktiekurser för olika bolag
+
+### Hämtar aktiekurser för olika bolag, använd id från instruments
 
 systemair_kurs <- fetch_stockprice(id = 221, key = key)
 Sys.sleep(0.6)
@@ -66,10 +68,7 @@ ggpairs(frame)
     ))
 
 
-# small function to display plots only if it's interactive
-p_ <- GGally::print_if_interactive
-
-# Use a wrapped function in ggpairs
+# tar fram yttligare en korrelationsmatris
 ggpairs(
   data = frame,
   mapping = 1:4,
@@ -79,5 +78,4 @@ ggpairs(
 ) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
-
 ```
