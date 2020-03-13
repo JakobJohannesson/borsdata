@@ -11,19 +11,19 @@ devtools::install_github('jakobjohannesson/borsdata')
 
 ### Använd dig av börsdatas API. Se exempelkod nedan!
 
-```{r message=FALSE}
+```r
 
 # Om du inte har paketen installera paketen genom:
 install.packages(c("httr","jsonlite","dplyr", "stringr"))
 
-#### paket ####
+#### Paket ####
 library(httr)
 library(jsonlite)
 library(dplyr)
 library(stringr)
 library(borsdata)
 
-# ange din API nyckel
+# Ange din API nyckel - Kräver pro medlemskap hos börsdata.se
 key <- "<API KEY>"
 
 ### Tillämpningar - Korrelationsmatris mellan olika bolag
@@ -40,7 +40,7 @@ Sys.sleep(0.5)
 ### Hämtar aktiekurser för olika bolag, använd id från instruments
 
 systemair_kurs <- fetch_stockprice(id = 221, key = key)
-Sys.sleep(0.6)
+Sys.sleep(0.6) # Använder Sys.sleep för att undvika att pinga börsdatas servrar för snabbt
 jm_kurs <- fetch_stockprice(id = 116, key = key)
 Sys.sleep(0.6)
 bahnhof_kurs <- fetch_stockprice(id = 520, key = key)
@@ -53,13 +53,14 @@ balder_kurs <- balder_kurs[-1, ]
 systemair_kurs <- systemair_kurs[-1, ]
 jm_kurs <- jm_kurs[-1, ]
 
-### Kurserna sammanslagna till en frame
+### Kurserna sammanslagna till en data frame
 
 frame <-
   data.frame(jm_kurs$c, systemair_kurs$c, bahnhof_kurs$c, balder_kurs$c)
 colnames(frame) <- c("JM", "Systemair", "Bahnhof", "Balder")
 
 #### Visualisering - Korrelationsmatris ####
+# install.packages("GGally") # om du saknar paketet GGally
 library(GGally)
 ggpairs(frame)
 
