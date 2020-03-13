@@ -2,23 +2,14 @@
 title: "Börsdata API"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{A Short Introduction to the caret Package}
+  %\VignetteIndexEntry{Introduktion till borsdata paketet}
 output:
   knitr:::html_vignette
 ---
 
-```{r loadLibs, include = FALSE}
-library(httr)
-library(jsonlite)
-library(dplyr)
-library(stringr)
-library(borsdata)
-```
-
 Använd dig av börsdatas API. Se exempelkod nedan!
 
-```{r}
-
+```{r message=FALSE}
 
 #### paket ####
 library(httr)
@@ -28,7 +19,7 @@ library(stringr)
 library(borsdata)
 
 # ange din API nyckel
-key <- ""
+key <- "<API KEY>"
 
 ### Tillämpningar
 
