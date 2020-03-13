@@ -1,0 +1,2 @@
+# borsdata
+Börsdata API
