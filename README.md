@@ -57,7 +57,7 @@ frame <-
 colnames(frame) <- c("JM", "Systemair", "Balder")
 ```
 
-Visualisering av resultatet i en korrelationsmatris. Skapa tre olika för att visa att det förstås finns många möjligheter på vad som går att göra med datamaterialet.
+Skapar en korrelationsmatis.
 
 ```r
 install.packages("GGally") # om du inte redan har installerat GGally.
