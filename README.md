@@ -9,9 +9,12 @@ devtools::install_github('jakobjohannesson/borsdata')
 ```
 
 
-Använd dig av börsdatas API. Se exempelkod nedan!
+### Använd dig av börsdatas API. Se exempelkod nedan!
 
 ```{r message=FALSE}
+
+# Om du inte har paketen installera paketen genom:
+install.packages(c("httr","jsonlite","dplyr", "stringr"))
 
 #### paket ####
 library(httr)
