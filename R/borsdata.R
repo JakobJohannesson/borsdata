@@ -1,3 +1,10 @@
+#### paket ####
+library(httr)
+library(jsonlite)
+library(dplyr)
+library(stringr)
+library(borsdata)
+
 # branches
 fetch_branches<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
