@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-fetch_branches(x)
+fetch_branches(key=key) - Hämtar branches ur api.
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,18 +28,24 @@ fetch_branches(x)
 }
 \references{
 %% ~put references to the literature/web site here ~
+https://borsdata.se/info/api/api_info
+https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
+https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
+https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
 }
 \author{
 %%  ~~who you are~~
 }
 \note{
 %%  ~~further notes~~
+Håll utkik på github för nya släpp.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+https://www.jakobj.se
 }
 \examples{
 

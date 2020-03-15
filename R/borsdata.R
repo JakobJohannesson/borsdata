@@ -3,11 +3,10 @@ fetch_branches<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/branches"
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, ) #
-  df<-df$branches  # Sektorerna
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  df<-df$branches
   return(df)
 }
 
@@ -16,11 +15,10 @@ fetch_countries<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/countries"
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, ) #
-  df<-df$countries  # Sektorerna
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  df<-df$countries
   return(df)
 }
 
@@ -29,10 +27,9 @@ fetch_markets<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/markets"
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, ) #
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   df<-df$markets  # Sektorerna
   return(df)
 }
@@ -42,10 +39,9 @@ fetch_sectors<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/sectors"
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, ) #
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   df<-df$sectors  # Sektorerna
   return(df)
 }
@@ -57,10 +53,9 @@ fetch_instruments<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/instruments" # Instruments
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code # retunerar 200 om det fungerar
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, )
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   df <- df$instruments # Denna innehåller alla olika bolag
   return(df)
 }
@@ -71,10 +66,9 @@ fetch_updated_instruments<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- "/v1/instruments/updated" # Instruments updated
-  getdata<-GET(url=paste0(root, endpoint, auth, key))
-  getdata$status_code # retunerar 200 om det fungerar
-  data_json <- content(getdata, type="text", encoding = "UTF-8") # Konverterar från json till en lista
-  df <- fromJSON(data_json, )
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   df <- df$instruments # returnerar de bolagen som senast har uppdaterats
   return(df)
 }
@@ -85,9 +79,9 @@ fetch_year<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
-  company <-GET(url=paste0(root, endpoint, auth, key))
-  company <- content(company, type="text", encoding = "UTF-8")
-  df <- fromJSON(company)
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   return(df$reportsYear)
 }
 
@@ -95,9 +89,9 @@ fetch_r12<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
-  company <-GET(url=paste0(root, endpoint, auth, key))
-  company <- content(company, type="text", encoding = "UTF-8")
-  df <- fromJSON(company)
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   return(df$reportsR12)
 }
 
@@ -105,9 +99,9 @@ fetch_quarter<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/reports")
-  company <-GET(url=paste0(root, endpoint, auth, key))
-  company <- content(company, type="text", encoding = "UTF-8")
-  df <- fromJSON(company)
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   return(df$reportsQuarter)
 }
 
@@ -116,24 +110,24 @@ fetch_quarter<-function(id,key=key){
 fetch_stockprice<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
-  kurs_endpoint <- paste0("/v1/instruments/", id,"/stockprices")
-  bolag <-GET(url=paste0(root, kurs_endpoint, auth, key))
-  bolag <- content(bolag, type="text", encoding = "UTF-8")
-  bolag <- fromJSON(bolag)
-  kurs<-bolag$stockPricesList
+  endpoint <- paste0("/v1/instruments/", id,"/stockprices")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  kurs<-df$stockPricesList
   return(kurs)
 }
 
 # Stock Prices last
 
 fetch_stockprice_last<-function(key=key){
-  root <- "https://apiservice.borsdata.se" # Root
+  root <- "https://apiservice.borsdata.se" # Rootxxxx
   auth <- "?authKey="
-  kurs_endpoint <- paste0("/v1/instruments/","/stockprices/last")
-  bolag <-GET(url=paste0(root, kurs_endpoint, auth, key))
-  bolag <- content(bolag, type="text", encoding = "UTF-8")
-  bolag <- fromJSON(bolag)
-  kurs<-bolag$stockPricesList
+  endpoint <- paste0("/v1/instruments/","/stockprices/last")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  kurs<-df$stockPricesList
   return(kurs)
 }
 
@@ -142,10 +136,10 @@ fetch_stockprice_last<-function(key=key){
 fetch_stocksplits<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
-  kurs_endpoint <- paste0("/v1/instruments/","stocksplits")
-  bolag <-GET(url=paste0(root, kurs_endpoint, auth, key))
-  bolag <- content(bolag, type="text", encoding = "UTF-8")
-  bolag <- fromJSON(bolag)
+  endpoint <- paste0("/v1/instruments/","stocksplits")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
   kurs<-bolag$stockSplitList
   return(kurs)
 }

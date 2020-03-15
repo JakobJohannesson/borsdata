@@ -3,6 +3,9 @@ Type: Package
 Title: Börsdata API
 Version: 0.1.0
 Author: Jakob Johannesson
+Imports:
+    httr,
+    jsonlite
 Maintainer: Jakob Johannesson <jakob@jakobj.se>
 Description: Ansluter till Börsdatas API tjänst
 License: MIT
