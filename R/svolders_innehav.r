@@ -1,8 +1,6 @@
 
-instruments<-fetch_instruments(key=key)
-instruments[str_detect(string = instruments$name, pattern = "Lime Tech"),]
 
-instruments[instruments$insId==155,]
+
 key<-"API"
 
 garo <- fetch_stockprice(id = 1011, key = key)
