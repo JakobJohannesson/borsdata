@@ -1,52 +1,50 @@
 \name{fetch_updated_instruments}
 \alias{fetch_updated_instruments}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Fetch Updated Instruments
-%%  ~~function to do ... ~~
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Information is only available in Swedish. fetch_updated_instruments hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_updated_instruments(x)
+fetch_updated_instruments(key=key) - Hämtar updated_instruments ur api.
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Vid användning behöver du en nyckel till börsdatas API. Ange din nyckel genom att ange den som en string till variabeln key. Se exempel nedan!
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returnerar värden:  id på aktien (insID) och vilken tid som bolaget uppdaterades.
+
 }
 \references{
-%% ~put references to the literature/web site here ~
+https://borsdata.se/info/api/api_info
+https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
+https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
+https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
 }
 \author{
-%%  ~~who you are~~
+Jag heter Jakob Johannesson och är en student vid Linköpings universitet. Gör detta som ett roligt projekt då det är kul att testa nya saker. Borsdata blir mitt första paket jag utvecklar i R, främst för att jag tycker att både R och Börsdata är så troligt bra.
 }
 \note{
-%%  ~~further notes~~
+Håll utkik på github för nya släpp. Uppdatera paketet om du märker att jag har lagt in något på paketets github sida: https://www.github.com/jakobjohannesson/borsdata
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Undrar du något så hör av dig till mig: jakob@jakobj.se 
+
+Kolla gärna in min hemsida! https://www.jakobj.se
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-update<-fetch_stocksplits(key=key)
-str(update)
+# Ange din API nyckel
+key<-"<API NYCKEL>"
+
+# Kalla på updated_instruments
+updated_instruments<-fetch_updated_instruments(key=key)
+str(updated_instruments)
+
+
 }

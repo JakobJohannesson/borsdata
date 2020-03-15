@@ -140,9 +140,7 @@ fetch_stocksplits<-function(key=key){
   getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
-  kurs<-bolag$stockSplitList
+  kurs<-df$stockSplitList
   return(kurs)
 }
-
-
 

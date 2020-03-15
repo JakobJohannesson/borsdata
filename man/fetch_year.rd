@@ -1,52 +1,54 @@
 \name{fetch_year}
 \alias{fetch_year}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Fetch Year
-%%  ~~function to do ... ~~
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Information is only available in Swedish. fetch_year hämtar all årsdata som finns att tillgå genom börsdata.
 }
 \usage{
-fetch_year(x)
+fetch_year(id=insID,key=key) - Hämtar årsdata ur api. InsID hämtas genom att köra funktionen fetch_instruments(key=key)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Vid användning behöver du en nyckel till börsdatas API. Ange din nyckel genom att ange den som en string till variabeln key. Se exempel nedan!
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returnerar en data.frame med senaste 10 årens finasiella data. Innehåller 33 variabler, med en rad olika finansiella data.
+
 }
 \references{
-%% ~put references to the literature/web site here ~
+https://borsdata.se/info/api/api_info
+https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
+https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
+https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
 }
 \author{
-%%  ~~who you are~~
+Jag heter Jakob Johannesson och är en student vid Linköpings universitet.
 }
 \note{
-%%  ~~further notes~~
+Håll utkik på github för nya släpp. Uppdatera paketet om du märker att jag har lagt in något på paketets github sida: https://www.github.com/jakobjohannesson/borsdata
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+Undrar du något så hör av dig till mig: jakob@jakobj.se 
 
-## The function is currently defined as
-systemair<-fetch_years(id=221,key=key)
+Kolla gärna in min hemsida! https://www.jakobj.se
+}
+
+
+\examples{
+# Ange din API nyckel
+key<-"<API NYCKEL>"
+
+# Hämta id för det bolaget som du vill ha data om
+fetch_instruments(key=key)
+
+# Ange ditt id i funktionen, exempelvis 221 för Systemair
+systemair<-fetch_year(id=221,key=key)
 str(systemair)
+
+# 10 obs. of 33 variables: ......
 }

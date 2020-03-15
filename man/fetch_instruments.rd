@@ -1,60 +1,48 @@
 \name{fetch_instruments}
 \alias{fetch_instruments}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Fetch Instruments
-%%  ~~function to do ... ~~
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Information is only available in Swedish. fetch_instruments hämtar alla aktier finns att tillgå genom börsdata, dock endast svenska, danska, finska och norska aktier.
 }
 \usage{
-fetch_instruments(x)
+fetch_instruments(key=key) - Hämtar alla akiter.
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-fetch_instruments()
-}
+
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
-Fetch Instruments
+Vid användning behöver du en nyckel till börsdatas API. Ange din nyckel genom att ange den som en string till variabeln key. Se exempel nedan!
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-returnerar en list
+Returnerar en data.frame med 1616 olika aktier med 12 olika variabler, bland annat vilket land bolaget är noterat i och vilket ID som aktien har i databasen. Id variabel är mycket viktigt för att hitta aktierna som intresserar just dig.
+
 }
 \references{
-%% ~put references to the literature/web site here ~
-https://www.jakobj.se
+https://borsdata.se/info/api/api_info
+https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
+https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
+https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
 }
 \author{
-%%  ~~who you are~~
-Jakob Johannesson
+Jag heter Jakob Johannesson och är en student vid Linköpings universitet.
 }
 \note{
-%%  ~~further notes~~
-
+Håll utkik på github för nya släpp. Uppdatera paketet om du märker att jag har lagt in något på paketets github sida: https://www.github.com/jakobjohannesson/borsdata
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Undrar du något så hör av dig till mig: jakob@jakobj.se 
+
+Kolla gärna in min hemsida! https://www.jakobj.se
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
+# Ange din API nyckel
+key<-"<API NYCKEL>"
 
-#kör
-aktier<-fetch_instruments(key=key)
-str(aktier)
+# Kalla på instruments
+instruments<-fetch_instruments(key=key)
+str(instruments)
 }
