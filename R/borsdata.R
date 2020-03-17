@@ -1,4 +1,5 @@
 # branches
+
 fetch_branches<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
@@ -11,6 +12,7 @@ fetch_branches<-function(key=key){
 }
 
 # countries
+
 fetch_countries<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
@@ -23,6 +25,7 @@ fetch_countries<-function(key=key){
 }
 
 # markets
+
 fetch_markets<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
@@ -35,6 +38,7 @@ fetch_markets<-function(key=key){
 }
 
 # sectors
+
 fetch_sectors<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
@@ -134,6 +138,7 @@ fetch_stockprice_last<-function(key=key){
 # Stock splits
 
 fetch_stocksplits<-function(key=key){
+  
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/","stocksplits")
@@ -143,4 +148,3 @@ fetch_stocksplits<-function(key=key){
   kurs<-df$stockSplitList
   return(kurs)
 }
-

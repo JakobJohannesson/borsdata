@@ -26,6 +26,11 @@ https://borsdata.se/info/api/api_info
 https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
 https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
 https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
+
+#' @family aggregate functions
+#' @seealso  for products, \code{\link{cumsum}} for cumulative
+#'   sums, and \code{\link{colSums}}/\code{\link{rowSums}} marginal sums over
+#'   high-dimensional arrays.
 }
 \author{
 Jag heter Jakob Johannesson och är en student vid Linköpings universitet. Gör detta som ett roligt projekt då det är kul att testa nya saker. Borsdata blir mitt första paket jag utvecklar i R, främst för att jag tycker att både R och Börsdata är så troligt bra.

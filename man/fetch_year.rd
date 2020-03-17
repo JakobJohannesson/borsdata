@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_year hämtar all årsdata som finns att tillgå genom börsdata.
 }
 \usage{
-fetch_year(id=insID,key=key) - Hämtar årsdata ur api. InsID hämtas genom att köra funktionen fetch_instruments(key=key)
+fetch_year(id=insID,key=key) - Hämtar årsdata ur api. InsID hämtas genom att köra funktionen \code{\link{fetch_instruments}}
 }
 
 \arguments{
