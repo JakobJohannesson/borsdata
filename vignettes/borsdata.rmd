@@ -4,7 +4,7 @@ author: "Jakob Johannesson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{borsdata}
+  %\VignetteIndexEntry{Borsdata API}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
