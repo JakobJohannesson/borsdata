@@ -6,13 +6,13 @@
 devtools::install_github('jakobjohannesson/borsdata')
 ```
 
-En överblick finns genom att kalla på vignette i din konsol.
+## Få en överblick över vad Börsdata API kan göra för dig
 
 ```r
 vignette("borsdata")
 ```
 
-Beskrivning av alla funktioner finns att tillgå genom:
+## Beskrivning av alla funktioner finns att tillgå genom:
 
 ```r
 help(package = "borsdata")
