@@ -3,7 +3,7 @@
 ## Installera från GitHub:
 
 ```r
-devtools::install_github('jakobjohannesson/borsdata')
+remotes::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
 ```
 
 ## Få en överblick över vad Börsdata API kan göra för dig
