@@ -1,5 +1,5 @@
 ---
-title: "Börsdata API"
+title: "Borsdata API"
 author: "Jakob Johannesson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,7 +16,7 @@ R-paketet `borsdata` är ett verktyg för att ansluta till Börsdatas API.
 Det lättaste sättet att installera R paketet är genom följande kod:
 
 ```{r, message=FALSE, eval=FALSE}
-remotes::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
+devtools::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
 ```
 
 ### Kom igång med Börsdata API
