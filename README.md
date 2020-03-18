@@ -5,8 +5,10 @@ För att använda dig av paketet behöver du Börsdata pro.
 ## Installera från GitHub:
 
 ```r
+# install.packages("devtools")
 devtools::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
 ```
+Om du saknar devtools, ta bort kommentaren (#) och installera det innan du installerar borsdata.
 
 ## Kort introduktion av paketet
 
