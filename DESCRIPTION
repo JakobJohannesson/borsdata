@@ -1,6 +1,6 @@
 Package: borsdata
 Type: Package
-Title: Börsdata API
+Title: Borsdata API
 Version: 0.1.0
 Author: Jakob Johannesson
 Imports:
