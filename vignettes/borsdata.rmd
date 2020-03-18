@@ -28,38 +28,36 @@ help(package = "borsdata")
 ```
 
 
-Behöver du hjälp finns mer dokumentation och kontaktinformation  [här](https://github.com/jakobjohannesson/borsdata).
 
 ### Användning
 
-För att använda dig av borsdata, så måste du ladda in paketet till din lokala miljön:
+För att använda dig av `borsdata`, så måste du ladda in paketet till din lokala miljö:
 
 ```{r, message=FALSE}
 library(borsdata)
 ```
 
-Ange sedan din nyckel som du kan hitta på [Min sida](https://borsdata.se/mypage/api), givet att du är inloggade på börsdata och har Börsdata pro.
+Ange din nyckel som du kan hitta på [Min sida](https://borsdata.se/mypage/api), givet att du är inloggad på Börsdata och har Börsdata pro.
 
 ```{r, message=TRUE}
-key<- "API" # Ange din API nyckel
+key<- "<API key>" # Ange din API nyckel 
 ```
 
-När du har angivit din nyckel kan du använda dig av Börsdatas API. Exempel på funktioner som du nu kan kalla på är:
+Exempel på funktioner som du nu kan kalla på är:
 
 ```{r eval=FALSE}
-
 # Instruments innehåller alla aktier
 instruments <- fetch_instruments(key = key)
 str(instruments)
+head(instruments)
 ```
 
-Om du får en error ovan beror det troligen på att din API nyckel inte stämmer. Från instruments kan ID värden utläsas vilket används sedan för att hämta data som är kopplat till det bolaget. Exempelvis har Systemair insID=221, använder nu information för att hämta årsdata om Systemair.
+Från instruments kan insID värden utläsas vilket används sedan för att hämta data som är kopplat till det bolaget. Exempelvis har Systemair insID=221, använder nu information för att hämta årsdata om Systemair.
 
 ```{r eval=FALSE}
 # Ange ditt id i funktionen, exempelvis 221 för Systemair
 systemair<-fetch_year(id=221,key=key)
-str(systemair)
-
+head(systemair)
 ```
 
 För att hämta kvartalsdata och rullade 12 månadersdata, använd då följande:
@@ -91,58 +89,56 @@ Sys.sleep(3)
 frame <-data.frame(JM=jm_kurs$c, Systemair=systemair_kurs$c, Balder=balder_kurs$c)
 ```
 
-
-
 Skapar en korrelationsmatis.
 
 ```{r eval=FALSE}
+# install.packages("GGally)
 library(GGally)
 
 
 ggpairs(frame)
 
-ggcorr(frame,
-      method = c("pairwise", "pearson"),
-      label = TRUE,
-      digits = 2)
-
-
 # tar fram yttligare en korrelationsmatris
 ggpairs(
   data = frame,
-  mapping = 1:3,
   axisLabels = "internal",
-  upper = list(continuous = "cor"),
-  title = "Korrelationsmatris mellan bolag"
-) +
+  title = "Korrelationsmatris mellan bolag") +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
-
 ```
 
 
 Andra funktioner som finns att tillgå är:
 
 ```{r eval=FALSE}
+
 # Kalla på branches
 branches<-fetch_branches(key=key)
-str(branches)
+head(branches)
 
 # Kalla på countries
 countries<-fetch_countries(key=key)
-str(countries)
+head(countries)
 
 
 # Kalla på markets
 markets<-fetch_markets(key=key)
-str(markets)
+head(markets)
 
 # Kalla på updated_instruments
 updated_instruments<-fetch_updated_instruments(key=key)
-str(updated_instruments)
+head(updated_instruments)
 
 # Kalla på sectors
 sectors<-fetch_sectors(key=key)
-str(sectors)
+head(sectors)
+
+# Kalla på stockprice_last
+stockprice_last<-fetch_stockprice_last(key=key)
+head(stockprice_last)
+
+# Kalla på stocksplits
+stocksplits<-fetch_stocksplits(key=key)
+head(stocksplits)
 
 ```
