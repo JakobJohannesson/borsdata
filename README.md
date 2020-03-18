@@ -1,6 +1,6 @@
 # Börsdata API i R
 
-För att använda dig av paketet behöver du ha Börsdata pro.
+För att använda dig av paketet behöver du Börsdata pro.
 
 ## Installera från GitHub:
 
