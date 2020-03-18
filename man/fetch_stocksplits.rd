@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_stocksplits hämtar de senaste splittarna och sammanslagningarna av aktier som har skett.
 }
 \usage{
-fetch_stocksplits(key=key)
+
 }
 
 \arguments{

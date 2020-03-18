@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_markets hämtar alla marknader finns att tillgå genom börsdata.
 }
 \usage{
-fetch_markets(key=key)
+
 }
 
 \arguments{

@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_year hämtar all årsdata som finns att tillgå genom börsdata.
 }
 \usage{
-fetch_year(id=insID,key=key) - Hämtar årsdata ur api. InsID hämtas genom att köra funktionen \code{\link{fetch_instruments}}
+
 }
 
 \arguments{
@@ -20,10 +20,7 @@ Returnerar en data.frame med senaste 10 årens finasiella data. Innehåller 33 v
 
 }
 \references{
-https://borsdata.se/info/api/api_info
 https://borsdata.se/mypage/api - Direktlänk till din nyckel om du är inloggad och är pro medlem.
-https://github.com/Borsdata-Sweden - Börsdatas API beskrivning
-https://apidoc.borsdata.se/swagger/index.html - Index för dokumentationen
 }
 \author{
 Jag heter Jakob Johannesson och är en student vid Linköpings universitet.
@@ -43,12 +40,12 @@ Kolla gärna in min hemsida! https://www.jakobj.se
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-## Hämta id för det bolaget som du vill ha data om
-#fetch_instruments(key=key)
+# Hämta id för det bolaget som du vill ha data om
+fetch_instruments(key=key)
 
-## Ange ditt id i funktionen, exempelvis 221 för Systemair
-#systemair<-fetch_year(id=221,key=key)
-#str(systemair)
+# Ange ditt id i funktionen, exempelvis 221 för Systemair
+systemair<-fetch_year(id=221,key=key)
+str(systemair)
 
 # 10 obs. of 33 variables: ......
 }

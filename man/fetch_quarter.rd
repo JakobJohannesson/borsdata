@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_r12 hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_quarter(id=insID,key=key) - InsID hämtas genom att köra funktionen \code{\link{fetch_instruments}}
+
 }
 
 \arguments{

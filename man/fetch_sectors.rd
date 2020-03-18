@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_sectors hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_sectors(key=key) - Hämtar sectors ur api.
+
 }
 
 \arguments{

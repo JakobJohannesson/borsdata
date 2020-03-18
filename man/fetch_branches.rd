@@ -8,7 +8,7 @@
 Information is only available in Swedish. fetch_branches hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_branches(key=key) - Hämtar branches ur api.
+
 }
 
 \arguments{

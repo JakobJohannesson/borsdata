@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_stockprice_last hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_stockprice_last(key=key) - Hämtar stockprice_last ur api.
+
 }
 
 \arguments{

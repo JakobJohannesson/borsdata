@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_instruments hämtar alla aktier finns att tillgå genom börsdata, dock endast svenska, danska, finska och norska aktier.
 }
 \usage{
-fetch_instruments(key=key) - Hämtar alla akiter.
+
 }
 
 \arguments{

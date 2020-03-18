@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_stockprice hämtar aktiekursens rörelser under varje dag de 10 senaste åren.
 }
 \usage{
-fetch_stockprice(id=insID,key=key) - InsID hämtas genom att köra funktionen \code{\link{fetch_instruments}}
+
 }
 
 \arguments{

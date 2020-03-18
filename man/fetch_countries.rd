@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_countries hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_countries(key=key) - Hämtar countries ur api.
+
 }
 
 \arguments{

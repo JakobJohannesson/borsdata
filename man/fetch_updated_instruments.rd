@@ -6,7 +6,7 @@
 Information is only available in Swedish. fetch_updated_instruments hämtar alla branscher finns att tillgå genom börsdata.
 }
 \usage{
-fetch_updated_instruments(key=key) - Hämtar updated_instruments ur api.
+
 }
 
 \arguments{
