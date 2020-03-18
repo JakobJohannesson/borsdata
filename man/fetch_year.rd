@@ -43,12 +43,12 @@ Kolla gärna in min hemsida! https://www.jakobj.se
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Hämta id för det bolaget som du vill ha data om
-fetch_instruments(key=key)
+## Hämta id för det bolaget som du vill ha data om
+#fetch_instruments(key=key)
 
-# Ange ditt id i funktionen, exempelvis 221 för Systemair
-systemair<-fetch_year(id=221,key=key)
-str(systemair)
+## Ange ditt id i funktionen, exempelvis 221 för Systemair
+#systemair<-fetch_year(id=221,key=key)
+#str(systemair)
 
 # 10 obs. of 33 variables: ......
 }
