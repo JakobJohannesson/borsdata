@@ -62,7 +62,6 @@ head(systemair)
 
 För att hämta kvartalsdata och rullade 12 månadersdata, använd då följande:
 
-
 ```{r eval=FALSE}
 # Rullande 12 månader
 r12<-fetch_r12(id=221,key=key)
@@ -95,7 +94,6 @@ Skapar en korrelationsmatis.
 # install.packages("GGally)
 library(GGally)
 
-
 ggpairs(frame)
 
 # tar fram yttligare en korrelationsmatris
@@ -106,7 +104,6 @@ ggpairs(
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 ```
-
 
 Andra funktioner som finns att tillgå är:
 
@@ -119,7 +116,6 @@ head(branches)
 # Kalla på countries
 countries<-fetch_countries(key=key)
 head(countries)
-
 
 # Kalla på markets
 markets<-fetch_markets(key=key)
