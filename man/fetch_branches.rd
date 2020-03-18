@@ -45,13 +45,9 @@ Undrar du något så hör av dig till mig: jakob@jakobj.se
 Kolla gärna in min hemsida! https://www.jakobj.se
 }
 \examples{
-
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Kalla på branches
-branches<-fetch_branches(key=key)
-str(branches)
-
-
+# läs dokumentationen här
+vignette("borsdata")
 }

@@ -38,13 +38,9 @@ Undrar du något så hör av dig till mig: jakob@jakobj.se
 Kolla gärna in min hemsida! https://www.jakobj.se
 }
 \examples{
-
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Kalla på updated_instruments
-updated_instruments<-fetch_updated_instruments(key=key)
-str(updated_instruments)
-
-
+# läs dokumentationen här
+vignette("borsdata")
 }

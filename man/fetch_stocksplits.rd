@@ -42,7 +42,6 @@ Kolla gärna in min hemsida! https://www.jakobj.se
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Kallar på APIn
-splits<-fetch_stocksplits(key=key)
-str(splits)
+# läs dokumentationen här
+vignette("borsdata")
 }

@@ -38,13 +38,9 @@ Undrar du något så hör av dig till mig: jakob@jakobj.se
 Kolla gärna in min hemsida! https://www.jakobj.se
 }
 \examples{
-
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Kalla på countries
-countries<-fetch_countries(key=key)
-str(countries)
-
-
+# läs dokumentationen här
+vignette("borsdata")
 }

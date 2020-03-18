@@ -37,15 +37,10 @@ Undrar du något så hör av dig till mig: jakob@jakobj.se
 
 Kolla gärna in min hemsida! https://www.jakobj.se
 }
-
 \examples{
 # Ange din API nyckel
 key<-"<API NYCKEL>"
 
-# Hämta id för det bolaget som du vill ha data om
-fetch_instruments(key=key)
-
-# Ange ditt id i funktionen, exempelvis 221 för Systemair
-systemair<-fetch_r12(id=221,key=key)
-str(systemair)
+# läs dokumentationen här
+vignette("borsdata")
 }
