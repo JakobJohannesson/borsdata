@@ -1,25 +1,26 @@
-# Börsdata API i R
+Börsdata API i R
+================
 
 För att använda dig av paketet behöver du Börsdata pro.
 
-## Installera från GitHub:
+Installera från GitHub:
+-----------------------
 
-```r
-# install.packages("devtools")
-devtools::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
-```
-Om du saknar devtools, ta bort kommentaren (#) och installera det innan du installerar borsdata.
+    # install.packages("devtools")
+    devtools::install_github('jakobjohannesson/borsdata', build_vignettes = TRUE)
 
-## Kort introduktion av paketet
+Om du saknar devtools, ta bort kommentaren (\#) och installera det innan
+du installerar borsdata.
 
-```r
-vignette("borsdata")
-```
+Introduktion till paketet
+-------------------------
 
-## Beskrivning av alla funktioner finns att tillgå genom:
+    vignette("borsdata")
 
-```r
-help(package = "borsdata")
-```
+Beskrivning av alla funktioner finns att tillgå genom:
+------------------------------------------------------
 
-Hoppas paketet är till nytta, undrar du något så [kontakta mig](https://www.jakobj.se/kontakt). 
+    help(package = "borsdata")
+
+Hoppas paketet är till nytta, undrar du något så [kontakta
+mig](https://www.jakobj.se/kontakt).
