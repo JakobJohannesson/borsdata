@@ -82,31 +82,31 @@ fetch_updated_instruments<-function(key=key){
 fetch_year<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
-  endpoint <- paste0("/v1/instruments/", id,"/reports")
-  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  endpoint <- paste0("/v1/instruments/", id,"/reports/year")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key, "&maxcount=20"))
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
-  return(df$reportsYear)
+  return(df$reports)
 }
 
 fetch_r12<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
-  endpoint <- paste0("/v1/instruments/", id,"/reports")
-  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  endpoint <- paste0("/v1/instruments/", id,"/reports/r12")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key, "&maxcount=40"))
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
-  return(df$reportsR12)
+  return(df$reports)
 }
 
 fetch_quarter<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
-  endpoint <- paste0("/v1/instruments/", id,"/reports")
-  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  endpoint <- paste0("/v1/instruments/", id,"/reports/quarter")
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key, "&maxcount=40"))
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
-  return(df$reportsQuarter)
+  return(df$reports)
 }
 
 # Stock Prices
@@ -115,7 +115,7 @@ fetch_stockprice<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/", id,"/stockprices")
-  getdata<-httr::GET(url=paste0(root, endpoint, auth, key))
+  getdata<-httr::GET(url=paste0(root, endpoint, auth, key, "&maxcount=20"))
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
   kurs<-df$stockPricesList
