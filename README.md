@@ -23,5 +23,4 @@ Beskrivning av alla funktioner finns att tillgå genom:
     help(package = "borsdata")
 
 Hoppas paketet är till nytta, undrar du något så [kontakta
-mig](https://www.jakobj.se/kontakt). Uppdaterat senast den 22a april
-2020.
+mig](https://www.jakobj.se). Uppdaterat senast den 24a augusti 2020.
