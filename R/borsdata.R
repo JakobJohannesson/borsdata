@@ -171,8 +171,7 @@ fetch_kpi_metadata<-function(key=key){
 
 # KPI year
 
-fetch_kpi_year<-function(bolag=bolag,key=key){
-  library(dplyr)
+fetch_kpi_year<-function(id=id,key=key){
   fetch_kpi_metadata<-function(key=key){
     root <- "https://apiservice.borsdata.se" # Root
     getdata<-httr::GET(url = paste0(root,"/v1/Instruments/kpis/metadata?authKey=",key))
@@ -182,9 +181,9 @@ fetch_kpi_year<-function(bolag=bolag,key=key){
   }
   metadata<-fetch_kpi_metadata(key)
   
-  kpi_year<-function(kpiid,bolag=bolag,key=key){
+  kpi_year<-function(kpiid,id=id,key=key){
     root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
     col<-hej$values  %>% select(-2)
@@ -203,31 +202,29 @@ fetch_kpi_year<-function(bolag=bolag,key=key){
 
 # KPI R12
 
-fetch_kpi_r12<-function(bolag=bolag,key=key){
-  library(dplyr)
-  
+fetch_kpi_r12<-function(id=id,key=key){
   history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
   hej<-history %>% filter(Reporttype=="r12") %>% filter(Pricetype == "mean")
   spin<-hej$KpiId
   
-  kpi_r12<-function(kpiid,bolag=bolag,key=key){
+  kpi_r12<-function(kpiid,id=id,key=key){
     root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/r12/mean/history?authKey=",key,"&maxcount=40"))
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/r12/mean/history?authKey=",key,"&maxcount=40"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej2<-jsonlite::fromJSON(hej)
     col<-hej2$values  
     return(col)
   }
   
-  kalas<-kpi_r12(key = key, kpiid = spin[1], bolag = bolag) 
+  kalas<-kpi_r12(key = key, kpiid = spin[1], id = id) 
   for(i in 2:length(spin)){
     kalas<-kalas %>%
-      bind_cols(kpi_r12(key = key, kpiid = spin[i], bolag = bolag)) %>%
+      bind_cols(kpi_r12(key = key, kpiid = spin[i], id = id)) %>%
       select(contains("v"))
     print(paste("Stage:", i,"/",length(spin)))
   }
   colnames(kalas)<-hej$Name[1:89]
-  kalas<-kalas %>% bind_cols(kpi_r12(key = key, kpiid = spin[1], bolag = bolag)) %>% 
+  kalas<-kalas %>% bind_cols(kpi_r12(key = key, kpiid = spin[1], id = id)) %>% 
     select(-92)
   
   return(kalas)
@@ -235,30 +232,29 @@ fetch_kpi_r12<-function(bolag=bolag,key=key){
 
 # KPI Quarter
 
-fetch_kpi_quarter<-function(bolag=bolag,key=key){
-  library(dplyr)
+fetch_kpi_quarter<-function(id=id,key=key){
   history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History") #Drömmen!
   hej<-history %>% filter(Reporttype=="quarter")
   spin<-hej$KpiId
   
-  kpi_quarter<-function(kpiid,bolag=bolag,key=key){
+  kpi_quarter<-function(kpiid,id=id,key=key){
     root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/quarter/mean/history?authKey=",key,"&maxcount=40"))
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/quarter/mean/history?authKey=",key,"&maxcount=40"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
     col<-hej$values 
     return(col)
   }
   
-  kalas<-kpi_quarter(key = key, kpiid = spin[1], bolag = bolag) 
+  kalas<-kpi_quarter(key = key, kpiid = spin[1], id = id) 
   for(i in 2:length(spin[1:24])){
     kalas<-kalas %>%
-      bind_cols(kpi_quarter(key = key, kpiid = spin[i], bolag = bolag)) %>%
+      bind_cols(kpi_quarter(key = key, kpiid = spin[i], id = id)) %>%
       select(contains("v"))
     print(paste("Stage:", i,"/",length(spin[1:24])))
   }
   colnames(kalas)<-hej$Name[1:24]
-  kalas<-kalas %>% bind_cols(kpi_quarter(key = key, kpiid = spin[1], bolag = bolag)) %>% 
+  kalas<-kalas %>% bind_cols(kpi_quarter(key = key, kpiid = spin[1], id = id)) %>% 
     select(-27)
   return(kalas)
 }
