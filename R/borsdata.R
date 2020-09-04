@@ -1,4 +1,4 @@
-# branches
+# Branches
 
 fetch_branches<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -11,7 +11,7 @@ fetch_branches<-function(key=key){
   return(df)
 }
 
-# countries
+# Countries
 
 fetch_countries<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -24,7 +24,7 @@ fetch_countries<-function(key=key){
   return(df)
 }
 
-# markets
+# Markets
 
 fetch_markets<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -37,7 +37,7 @@ fetch_markets<-function(key=key){
   return(df)
 }
 
-# sectors
+# Sectors
 
 fetch_sectors<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -64,7 +64,7 @@ fetch_instruments<-function(key=key){
   return(df)
 }
 
-# Instruments updated
+# Instruments Updated
 
 fetch_updated_instruments<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -109,7 +109,7 @@ fetch_quarter<-function(id,key=key){
   return(df$reports)
 }
 
-# Stock Prices
+# Stock Price
 
 fetch_stockprice<-function(id,key=key){
   root <- "https://apiservice.borsdata.se" # Root
@@ -122,7 +122,7 @@ fetch_stockprice<-function(id,key=key){
   return(kurs)
 }
 
-# Stock Prices last
+# Stock Price Last
 
 fetch_stockprice_last<-function(key=key){
   root <- "https://apiservice.borsdata.se" # Rootxxxx
@@ -138,7 +138,6 @@ fetch_stockprice_last<-function(key=key){
 # Stock splits
 
 fetch_stocksplits<-function(key=key){
-  
   root <- "https://apiservice.borsdata.se" # Root
   auth <- "?authKey="
   endpoint <- paste0("/v1/instruments/","stocksplits")
@@ -148,3 +147,119 @@ fetch_stocksplits<-function(key=key){
   kurs<-df$stockSplitList
   return(kurs)
 }
+
+
+# KPI Metadata Updated
+
+fetch_updated_kpi_metadata<-function(key=key){
+  root <- "https://apiservice.borsdata.se" # Root
+  getdata<-httr::GET(url = paste0(root,"/v1/Instruments/kpis/updated?authKey=",key))
+  data_json<-httr::content(getdata, type = "text", encoding = "UTF-8")
+  info<-jsonlite::fromJSON(data_json)
+  return(info$kpisCalcUpdated)
+}
+
+# KPI Metadata
+
+fetch_kpi_metadata<-function(key=key){
+  root <- "https://apiservice.borsdata.se" # Root
+  getdata<-httr::GET(url = paste0(root,"/v1/Instruments/kpis/metadata?authKey=",key))
+  data_json<-httr::content(getdata, type = "text", encoding = "UTF-8")
+  info<-jsonlite::fromJSON(data_json)
+  return(info$kpiHistoryMetadatas)
+}
+
+# KPI year
+
+kpi_year_full<-function(bolag=bolag,key=key){
+  library(dplyr)
+  fetch_kpi_metadata<-function(key=key){
+    root <- "https://apiservice.borsdata.se" # Root
+    getdata<-httr::GET(url = paste0(root,"/v1/Instruments/kpis/metadata?authKey=",key))
+    data_json<-httr::content(getdata, type = "text", encoding = "UTF-8")
+    info<-jsonlite::fromJSON(data_json)
+    return(info$kpiHistoryMetadatas)
+  }
+  metadata<-fetch_kpi_metadata(key)
+  
+  kpi_year<-function(kpiid,bolag=bolag,key=key){
+    root <- "https://apiservice.borsdata.se" # Root
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
+    hej<-httr::content(hej, type="text", encoding = "UTF-8")
+    hej<-jsonlite::fromJSON(hej)
+    col<-hej$values  %>% select(-2)
+    return(col)
+  }
+  
+  kalas<-kpi_year(key = key, kpiid = 1)
+  for(i in metadata$kpiId[2:91]){
+    kalas<-kalas %>% left_join(kpi_year(key = key, kpiid = i),kalas,by="y")
+    print(paste("Stage:", i,"/",metadata$kpiId[91]))
+  }
+  colname<-metadata$nameSv[1:91]
+  colnames(kalas)<-c("year", colname)
+  return(kalas)
+}
+
+# KPI R12
+
+kpi_r12_full<-function(bolag=bolag,key=key){
+  library(dplyr)
+  
+  history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
+  hej<-history %>% filter(Reporttype=="r12") %>% filter(Pricetype == "mean")
+  spin<-hej$KpiId
+  
+  kpi_r12<-function(kpiid,bolag=bolag,key=key){
+    root <- "https://apiservice.borsdata.se" # Root
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/r12/mean/history?authKey=",key,"&maxcount=40"))
+    hej<-httr::content(hej, type="text", encoding = "UTF-8")
+    hej2<-jsonlite::fromJSON(hej)
+    col<-hej2$values  
+    return(col)
+  }
+  
+  kalas<-kpi_r12(key = key, kpiid = spin[1], bolag = bolag) 
+  for(i in 2:length(spin)){
+    kalas<-kalas %>%
+      bind_cols(kpi_r12(key = key, kpiid = spin[i], bolag = bolag)) %>%
+      select(contains("v"))
+    print(paste("Stage:", i,"/",length(spin)))
+  }
+  colnames(kalas)<-hej$Name[1:89]
+  kalas<-kalas %>% bind_cols(kpi_r12(key = key, kpiid = spin[1], bolag = bolag)) %>% 
+    select(-92)
+  
+  return(kalas)
+}
+
+# KPI Quarter
+
+kpi_quarter_full<-function(bolag=bolag,key=key){
+  library(dplyr)
+  history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History") #Drömmen!
+  hej<-history %>% filter(Reporttype=="quarter")
+  spin<-hej$KpiId
+  
+  kpi_quarter<-function(kpiid,bolag=bolag,key=key){
+    root <- "https://apiservice.borsdata.se" # Root
+    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",bolag,"/kpis/",kpiid,"/quarter/mean/history?authKey=",key,"&maxcount=40"))
+    hej<-httr::content(hej, type="text", encoding = "UTF-8")
+    hej<-jsonlite::fromJSON(hej)
+    col<-hej$values 
+    return(col)
+  }
+  
+  kalas<-kpi_quarter(key = key, kpiid = spin[1], bolag = bolag) 
+  for(i in 2:length(spin[1:24])){
+    kalas<-kalas %>%
+      bind_cols(kpi_quarter(key = key, kpiid = spin[i], bolag = bolag)) %>%
+      select(contains("v"))
+    print(paste("Stage:", i,"/",length(spin[1:24])))
+  }
+  colnames(kalas)<-hej$Name[1:24]
+  kalas<-kalas %>% bind_cols(kpi_quarter(key = key, kpiid = spin[1], bolag = bolag)) %>% 
+    select(-27)
+  return(kalas)
+}
+
