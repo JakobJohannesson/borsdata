@@ -79,11 +79,8 @@ Hämtar aktiekurser för Systemair, JM och Balder. Använder ```Sys.sleep(3)``` 
 
 ```{r eval=FALSE}
 systemair_kurs <- fetch_stockprice(id = 221, key = key)
-Sys.sleep(3)
 jm_kurs <- fetch_stockprice(id = 116, key = key)
-Sys.sleep(3)
 balder_kurs <- fetch_stockprice(id = 83, key = key)
-Sys.sleep(3)
 # Slår samman aktiekurserna till en och samma data.frame
 frame <-data.frame(JM=jm_kurs$c, Systemair=systemair_kurs$c, Balder=balder_kurs$c)
 ```
@@ -136,5 +133,36 @@ head(stockprice_last)
 # Kalla på stocksplits
 stocksplits<-fetch_stocksplits(key=key)
 head(stocksplits)
+
+## Senaste funktionerna! Nycketalsdata/KPIer
+
+# Metadata
+
+metadata<-fetch_kpi_metadata(key=key)
+head(metadata)
+
+# Senaste uppdateringen av metadata
+
+metadata_updated<-fetch_updated_kpi_metadata(key)
+head(metadata_updated)
+
+# KPI årsdata
+
+kpi_year<-fetch_kpi_year(key,bolag)
+head(kpi_year)
+
+# KPI r12
+
+kpi_r12<-fetch_kpi_r12(key,bolag)
+head(kpi_r12)
+
+# KPI quarter
+
+kpi_quarter<-fetch_kpi_quarter(key,bolag)
+head(kpi_quarter)
+
+
+
+
 
 ```

@@ -171,7 +171,7 @@ fetch_kpi_metadata<-function(key=key){
 
 # KPI year
 
-kpi_year_full<-function(bolag=bolag,key=key){
+fetch_kpi_year<-function(bolag=bolag,key=key){
   library(dplyr)
   fetch_kpi_metadata<-function(key=key){
     root <- "https://apiservice.borsdata.se" # Root
@@ -203,7 +203,7 @@ kpi_year_full<-function(bolag=bolag,key=key){
 
 # KPI R12
 
-kpi_r12_full<-function(bolag=bolag,key=key){
+fetch_kpi_r12<-function(bolag=bolag,key=key){
   library(dplyr)
   
   history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
@@ -235,7 +235,7 @@ kpi_r12_full<-function(bolag=bolag,key=key){
 
 # KPI Quarter
 
-kpi_quarter_full<-function(bolag=bolag,key=key){
+fetch_kpi_quarter<-function(bolag=bolag,key=key){
   library(dplyr)
   history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History") #Drömmen!
   hej<-history %>% filter(Reporttype=="quarter")
