@@ -181,22 +181,31 @@ fetch_kpi_year<-function(id=id,key=key){
   }
   metadata<-fetch_kpi_metadata(key)
   
+  history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
+  hej<-history %>% filter(Reporttype=="year") %>% filter(Pricetype == "mean")
+  spin<-hej$KpiId
+  
+  
   kpi_year<-function(kpiid,id=id,key=key){
     root <- "https://apiservice.borsdata.se" # Root
     hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
-    col<-hej$values  %>% select(-2)
-    return(col)
+    if(length(hej$values) == 0){
+      return(data.frame(y=c(NA),v=c(NA)))
+    } else {
+      col<-hej$values %>% select(-2)
+      return(col)
+    }
   }
   
-  kalas<-kpi_year(key = key, kpiid = 1)
-  for(i in metadata$kpiId[2:91]){
-    kalas<-kalas %>% left_join(kpi_year(key = key, kpiid = i),kalas,by="y")
-    print(paste("Stage:", i,"/",metadata$kpiId[91]))
+  kalas<-kpi_year(key = key, kpiid = spin[1],id = id)
+  for(i in spin[2:length(spin)]){
+    kalas<-kalas %>% left_join(kpi_year(key = key, kpiid = i,id=id),kalas,by="y")
+    print(paste("Stage:", i,"/",length(spin)))
   }
-  colname<-metadata$nameSv[1:91]
-  colnames(kalas)<-c("year", colname)
+  colname<-hej$Name[1:ncol(kalas)-1]
+  colnames(kalas)<-c("year",colname)
   return(kalas)
 }
 
@@ -223,9 +232,9 @@ fetch_kpi_r12<-function(id=id,key=key){
       select(contains("v"))
     print(paste("Stage:", i,"/",length(spin)))
   }
-  colnames(kalas)<-hej$Name[1:89]
+  colnames(kalas)<-hej$Name[1:ncol(kalas)]
   kalas<-kalas %>% bind_cols(kpi_r12(key = key, kpiid = spin[1], id = id)) %>% 
-    select(-92)
+    select(-ncol(kalas))
   
   return(kalas)
 }
@@ -234,7 +243,7 @@ fetch_kpi_r12<-function(id=id,key=key){
 
 fetch_kpi_quarter<-function(id=id,key=key){
   history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History") #Drömmen!
-  hej<-history %>% filter(Reporttype=="quarter")
+  hej<-history %>% filter(Reporttype=="quarter") 
   spin<-hej$KpiId
   
   kpi_quarter<-function(kpiid,id=id,key=key){
@@ -247,15 +256,18 @@ fetch_kpi_quarter<-function(id=id,key=key){
   }
   
   kalas<-kpi_quarter(key = key, kpiid = spin[1], id = id) 
-  for(i in 2:length(spin[1:24])){
+  for(i in 2:length(spin)){
     kalas<-kalas %>%
       bind_cols(kpi_quarter(key = key, kpiid = spin[i], id = id)) %>%
       select(contains("v"))
-    print(paste("Stage:", i,"/",length(spin[1:24])))
+    print(paste("Stage:", i,"/",length(spin)))
   }
-  colnames(kalas)<-hej$Name[1:24]
-  kalas<-kalas %>% bind_cols(kpi_quarter(key = key, kpiid = spin[1], id = id)) %>% 
-    select(-27)
+  colnames(kalas)<-hej$Name[1:ncol(kalas)]
+  kalas<-kalas %>% bind_cols(kpi_quarter(key = key, kpiid = spin[1], id = id))
+  #kalas<-kalas %>% select(-ncol(kalas))
   return(kalas)
 }
+
+
+
 
