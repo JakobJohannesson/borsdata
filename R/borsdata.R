@@ -170,23 +170,8 @@ fetch_kpi_metadata<-function(key=key){
 # KPI year
 
 fetch_kpi_year<-function(id=id,key=key){
-  fetch_kpi_metadata<-function(key=key){
-    root <- "https://apiservice.borsdata.se" # Root
-    getdata<-httr::GET(url = paste0(root,"/v1/Instruments/kpis/metadata?authKey=",key))
-    data_json<-httr::content(getdata, type = "text", encoding = "UTF-8")
-    info<-jsonlite::fromJSON(data_json)
-    return(info$kpiHistoryMetadatas)
-  }
-  metadata<-fetch_kpi_metadata(key)
-  
-  history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
-  hej<-history %>% filter(Reporttype=="year") %>% filter(Pricetype == "mean")
-  spin<-hej$KpiId
-  
-  
   kpi_year<-function(kpiid,id=id,key=key){
-    root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
+    hej<-httr::GET(url = paste0("https://apiservice.borsdata.se/v1/Instruments/",id,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
     if(length(hej$values) == 0){
@@ -196,6 +181,10 @@ fetch_kpi_year<-function(id=id,key=key){
       return(col)
     }
   }
+  
+  history<-ralger::table_scrap(link = "https://github.com/Borsdata-Sweden/API/wiki/KPI-History")
+  hej<-history %>% filter(Reporttype=="year") %>% filter(Pricetype == "mean")
+  spin<-hej$KpiId 
   
   kalas<-kpi_year(key = key, kpiid = spin[1],id = id)
   for(i in spin[2:length(spin)]){
