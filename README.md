@@ -17,6 +17,9 @@ Introduktion till paketet
 
     vignette("borsdata")
 
+Läs mitt inlägg på min hemsida om hur du kommer igång med [Börsdata
+API](https://www.jakobj.se/hur-anvander-jag-borsdatas-api/).
+
 Beskrivning av alla funktioner finns att tillgå genom:
 ------------------------------------------------------
 

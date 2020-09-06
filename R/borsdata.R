@@ -50,7 +50,6 @@ fetch_sectors<-function(key=key){
   return(df)
 }
 
-
 # Instruments
 
 fetch_instruments<-function(key=key){
@@ -147,7 +146,6 @@ fetch_stocksplits<-function(key=key){
   kurs<-df$stockSplitList
   return(kurs)
 }
-
 
 # KPI Metadata Updated
 
@@ -267,7 +265,4 @@ fetch_kpi_quarter<-function(id=id,key=key){
   #kalas<-kalas %>% select(-ncol(kalas))
   return(kalas)
 }
-
-
-
 
