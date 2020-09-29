@@ -169,37 +169,101 @@ fetch_kpi_metadata<-function(key=key){
 
 # KPI year
 
-fetch_kpi_year<-function(kpiid,id=id,key=key){
-    hej<-httr::GET(url = paste0("https://apiservice.borsdata.se/v1/Instruments/",id,"/kpis/",kpiid,"/year/mean/history?authKey=",key,"&maxcount=20"))
-    hej<-httr::content(hej, type="text", encoding = "UTF-8")
-    hej<-jsonlite::fromJSON(hej)
-    if(length(hej$values) == 0){
-      return(data.frame(y=c(NA),v=c(NA)))
-    } else {
-      col<-hej$values
-      return(col)
+fetch_kpi_year<-function(id=id,key=key){
+    kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
+      filter(Reporttype == "year") %>%
+      filter(Pricetype == "mean")
+    kpi_table$KpiId
+    output<-NA
+    
+    for(i in kpi_table$KpiId){
+      hej<-httr::GET(url = paste0("https://apiservice.borsdata.se/v1/Instruments/",id,"/kpis/",i,"/year/mean/history?authKey=",key,"&maxcount=20"))
+      hej<-httr::content(hej, type="text", encoding = "UTF-8")
+      hej<-jsonlite::fromJSON(hej)
+      
+      if(length(hej$values) == 0){
+        print(class(hej$values))
+        output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+        print(i)
+      } else {
+        print(i)
+        col<-hej$values
+        if(is.na(output)){
+          output<-hej$values
+        } else {
+          output<-left_join(output,hej$values, by = c("y","p"))
+        }
+        
+      }
+      
     }
+    
+    colnames(output)<-c("year", "period",kpi_table$Name)
+    
+    return(output)
 }
 
 # KPI R12
 
-fetch_kpi_r12<-function(kpiid,id=id,key=key){
-    root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/r12/mean/history?authKey=",key,"&maxcount=40"))
+fetch_kpi_r12<-function(id=id,key=key){
+  kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
+    filter(Reporttype == "r12") %>%
+    filter(Pricetype == "mean")
+  output<-NA
+  
+  for(i in kpi_table$KpiId){
+    hej<-httr::GET(url = paste0("https://apiservice.borsdata.se/v1/Instruments/",id,"/kpis/",i,"/r12/mean/history?authKey=",key,"&maxcount=40"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
-    hej2<-jsonlite::fromJSON(hej)
-    col<-hej2$values  
-    return(col)
+    hej<-jsonlite::fromJSON(hej)
+    
+    if(length(hej$values) == 0){
+      print(class(hej$values))
+      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+      print(i)
+    } else {
+      print(i)
+      col<-hej$values
+      if(is.na(output)){
+        output<-hej$values
+      } else {
+        output<-left_join(output,hej$values, by = c("y","p"))
+      }
+    }
+  }
+  colnames(output)<-c("year", "period",kpi_table$Name)
+  
+  return(output)
 }
+
 
 # KPI Quarter
 
-fetch_kpi_quarter<-function(kpiid,id=id,key=key){
-    root <- "https://apiservice.borsdata.se" # Root
-    hej<-httr::GET(url = paste0(root,"/v1/Instruments/",id,"/kpis/",kpiid,"/quarter/mean/history?authKey=",key,"&maxcount=40"))
+fetch_kpi_quarter<-function(id=id,key=key){
+  kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
+    filter(Reporttype == "quarter") %>%
+    filter(Pricetype == "mean")
+  output<-NA
+  
+  for(i in kpi_table$KpiId){
+    hej<-httr::GET(url = paste0("https://apiservice.borsdata.se/v1/Instruments/",id,"/kpis/",i,"/quarter/mean/history?authKey=",key,"&maxcount=40"))
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
-    col<-hej$values 
-    return(col)
+    
+    if(length(hej$values) == 0){
+      print(class(hej$values))
+      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+      print(i)
+    } else {
+      print(i)
+      col<-hej$values
+      if(is.na(output)){
+        output<-hej$values
+      } else {
+        output<-left_join(output,hej$values, by = c("y","p"))
+      }
+    }
+  }
+  colnames(output)<-c("year", "period",kpi_table$Name)
+  
+  return(output)
 }
-
