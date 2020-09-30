@@ -169,8 +169,6 @@ fetch_kpi_metadata<-function(key=key){
 
 # KPI year
 
-
-
 fetch_kpi_year<-function(id=id,key=key){
     kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
       filter(Reporttype == "year") %>%
