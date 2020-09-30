@@ -189,7 +189,7 @@ fetch_kpi_year<-function(id=id,key=key){
       } else {
         print(i)
         col<-hej$values
-        if(is.na(output)){
+        if(is.na(output[1])){
           output<-hej$values
         } else {
           output<-left_join(output,hej$values, by = c("y","p"))
