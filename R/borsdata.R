@@ -209,7 +209,8 @@ fetch_kpi_year<-function(id=id,key=key){
 fetch_kpi_r12<-function(id=id,key=key){
   kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
     filter(Reporttype == "r12") %>%
-    filter(Pricetype == "mean")
+    filter(Pricetype == "mean") %>% 
+    arrange(KpiId)
   output<-NA
   
   for(i in kpi_table$KpiId){
@@ -217,18 +218,19 @@ fetch_kpi_r12<-function(id=id,key=key){
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
     
-    if(length(hej$values) == 0){
+    if(class(hej$values) == "list"){
       print(class(hej$values))
       output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
       print(i)
     } else {
-      print(i)
+      print(paste(i , "/ 148"))
       col<-hej$values
       if(is.na(output[1])){
         output<-hej$values
       } else {
         output<-left_join(output,hej$values, by = c("y","p"))
       }
+      
     }
   }
   colnames(output)<-c("year", "period",kpi_table$Name)
@@ -242,7 +244,8 @@ fetch_kpi_r12<-function(id=id,key=key){
 fetch_kpi_quarter<-function(id=id,key=key){
   kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
     filter(Reporttype == "quarter") %>%
-    filter(Pricetype == "mean")
+    filter(Pricetype == "mean") %>% 
+    arrange(KpiId)
   output<-NA
   
   for(i in kpi_table$KpiId){
@@ -250,21 +253,24 @@ fetch_kpi_quarter<-function(id=id,key=key){
     hej<-httr::content(hej, type="text", encoding = "UTF-8")
     hej<-jsonlite::fromJSON(hej)
     
-    if(length(hej$values) == 0){
+    if(class(hej$values) == "list"){
       print(class(hej$values))
       output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
       print(i)
     } else {
-      print(i)
+      print(paste(i , "/ 140"))
       col<-hej$values
-      if(is.na(output[i])){
+      if(is.na(output[1])){
         output<-hej$values
       } else {
         output<-left_join(output,hej$values, by = c("y","p"))
       }
+      
     }
   }
   colnames(output)<-c("year", "period",kpi_table$Name)
   
   return(output)
 }
+
+
