@@ -187,7 +187,7 @@ fetch_kpi_year<-function(id=id,key=key){
         output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
         print(i)
       } else {
-        print(i)
+        print(paste(i , "/ 148"))
         col<-hej$values
         if(is.na(output[1])){
           output<-hej$values
