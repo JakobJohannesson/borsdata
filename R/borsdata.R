@@ -172,7 +172,8 @@ fetch_kpi_metadata<-function(key=key){
 fetch_kpi_year<-function(id=id,key=key){
     kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
       filter(Reporttype == "year") %>%
-      filter(Pricetype == "mean") %>% arrange(KpiId)
+      filter(Pricetype == "mean") %>% 
+      arrange(KpiId)
     kpi_table$KpiId
     output<-NA
     
@@ -186,7 +187,6 @@ fetch_kpi_year<-function(id=id,key=key){
         output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
         print(i)
       } else {
-        print(dim(hej$values))
         print(i)
         col<-hej$values
         if(is.na(output)){
@@ -224,7 +224,7 @@ fetch_kpi_r12<-function(id=id,key=key){
     } else {
       print(i)
       col<-hej$values
-      if(is.na(output)){
+      if(is.na(output[1])){
         output<-hej$values
       } else {
         output<-left_join(output,hej$values, by = c("y","p"))
@@ -257,7 +257,7 @@ fetch_kpi_quarter<-function(id=id,key=key){
     } else {
       print(i)
       col<-hej$values
-      if(is.na(output)){
+      if(is.na(output[i])){
         output<-hej$values
       } else {
         output<-left_join(output,hej$values, by = c("y","p"))
