@@ -169,10 +169,12 @@ fetch_kpi_metadata<-function(key=key){
 
 # KPI year
 
+
+
 fetch_kpi_year<-function(id=id,key=key){
     kpi_table<-ralger::table_scrap("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
       filter(Reporttype == "year") %>%
-      filter(Pricetype == "mean")
+      filter(Pricetype == "mean") %>% arrange(KpiId)
     kpi_table$KpiId
     output<-NA
     
@@ -181,11 +183,12 @@ fetch_kpi_year<-function(id=id,key=key){
       hej<-httr::content(hej, type="text", encoding = "UTF-8")
       hej<-jsonlite::fromJSON(hej)
       
-      if(length(hej$values) == 0){
+      if(class(hej$values) == "list"){
         print(class(hej$values))
-        output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+        output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
         print(i)
       } else {
+        print(dim(hej$values))
         print(i)
         col<-hej$values
         if(is.na(output)){
@@ -218,7 +221,7 @@ fetch_kpi_r12<-function(id=id,key=key){
     
     if(length(hej$values) == 0){
       print(class(hej$values))
-      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
       print(i)
     } else {
       print(i)
@@ -251,7 +254,7 @@ fetch_kpi_quarter<-function(id=id,key=key){
     
     if(length(hej$values) == 0){
       print(class(hej$values))
-      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))))
+      output<-left_join(output,data.frame(y=output$y,p=output$p,v = rep(NA,nrow(output))),by = c("y","p"))
       print(i)
     } else {
       print(i)
