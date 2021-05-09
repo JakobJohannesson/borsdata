@@ -1,20 +1,22 @@
 Package: borsdata
 Type: Package
 Title: Borsdata API
-Version: 0.1.0
+Version: 0.2.0
 Author: Jakob Johannesson
 Imports:
     httr,
     jsonlite,
     dplyr,
-    ralger
+    rvest
 Maintainer: Jakob Johannesson <jakob@jakobj.se>
 Description: Ansluter till Börsdatas API tjänst
 License: MIT
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
+URL: https://jakobj.se
 Suggests: 
     knitr,
     rmarkdown
-RoxygenNote: 7.1.0
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
