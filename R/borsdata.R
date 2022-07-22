@@ -127,6 +127,26 @@ fetch_year<-function(id,key=key){
   return(df$reports)
 }
 
+#' Fetch year v2
+#' 
+#' @param key Din börsdata API nyckel
+#' @param id Börsdata id
+#' @return fetch_year returnerar de senaste 20 åren med årsredovisningar (eller så långt bak i tiden som det finns redovisningar).
+#' @export
+#' @examples
+#' key = "<API KEY>"
+#' id = 750 # Exempel 750 för Evolution
+#' fetch_year(id=750,key=key)
+#' @export
+#' @importFrom httr jsonlite
+fetch_year_v2<-function(id,key=key){
+  endpoint <- paste0("/v1/instruments/", id,"/reports/year")
+  getdata<-httr::GET(url=paste0("https://apiservice.borsdata.se", endpoint, "?authKey=", key, "&maxcount=20"))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  return(dplyr::mutate(df$reports,id = df$instrument))
+}
+
 
 #' Fetch R12
 #' 
@@ -148,6 +168,26 @@ fetch_r12<-function(id,key=key){
   return(df$reports)
 }
 
+#' Fetch R12 V2
+#' 
+#' @param key Din börsdata API nyckel
+#' @param id Börsdata id
+#' @return fetch_r12 returnerar en data.frame med rullande 12 månders kvartalsrapporter i sig. Returnerar 33 variabler.
+#' @export
+#' @examples
+#' key = "<API KEY>"
+#' id = 750 # Exempel 750 för Evolution
+#' fetch_r12(id=750,key=key)
+#' @export
+#' @importFrom httr jsonlite
+fetch_r12_v2<-function(id,key=key){
+  endpoint <- paste0("/v1/instruments/", id,"/reports/r12")
+  getdata<-httr::GET(url=paste0("https://apiservice.borsdata.se", endpoint, "?authKey=", key, "&maxcount=40"))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  return(dplyr::mutate(df$reports,id = df$instrument))
+}
+
 #' Fetch Quarter
 #' 
 #' @param key Din börsdata API nyckel
@@ -166,6 +206,26 @@ fetch_quarter<-function(id,key=key){
   data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
   df <- jsonlite::fromJSON(data_json,)
   return(df$reports)
+}
+
+#' Fetch Quarter v2
+#' 
+#' @param key Din börsdata API nyckel
+#' @param id Börsdata id
+#' @return fetch_quarter returnerar en data.frame med de 40 senaste kvartalsrapportna i sig. Returnerar 33 variabler.
+#' @export
+#' @examples
+#' key = "<API KEY>"
+#' id = 750 # Exempel 750 för Evolution
+#' fetch_quarter(id=750,key=key)
+#' @export
+#' @importFrom httr jsonlite
+fetch_quarter_v2<-function(id,key=key){
+  endpoint <- paste0("/v1/instruments/", id,"/reports/quarter")
+  getdata<-httr::GET(url=paste0("https://apiservice.borsdata.se", endpoint, "?authKey=", key, "&maxcount=40"))
+  data_json <- httr::content(getdata, type="text", encoding = "UTF-8")
+  df <- jsonlite::fromJSON(data_json,)
+  return(dplyr::mutate(df$reports,id = df$instrument))
 }
 
 #' Fetch Stockprice
@@ -278,7 +338,7 @@ fetch_kpi_metadata<-function(key=key){
 #' id = 750 # Exempel 750 för Evolution
 #' fetch_kpi_year(id=750,key=key)
 #' @export
-#' @importFrom httr jsonlite rvest
+#' @importFrom httr jsonlite rvest purrr lubridate
 fetch_kpi_year<-function(id=id,key=key){
   kpi_table<-read_html("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
       html_table() %>% pluck(1) %>%
@@ -332,7 +392,7 @@ fetch_kpi_year<-function(id=id,key=key){
 #' id = 750 # Exempel 750 för Evolution
 #' fetch_kpi_r12(id=750,key=key)
 #' @export
-#' @importFrom httr jsonlite rvest
+#' @importFrom httr jsonlite rvest purrr lubridate
 fetch_kpi_r12<-function(id=id,key=key){
   kpi_table<-rvest::read_html("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
     rvest::html_table() %>% purrr::pluck(1) %>%
@@ -381,7 +441,7 @@ fetch_kpi_r12<-function(id=id,key=key){
 #' id = 750 # Exempel 750 för Evolution
 #' fetch_kpi_quarter(id=750,key=key)
 #' @export
-#' @importFrom httr jsonlite rvest
+#' @importFrom httr jsonlite rvest purrr lubridate
 fetch_kpi_quarter<-function(id=id,key=key){
   kpi_table<-read_html("https://github.com/Borsdata-Sweden/API/wiki/KPI-History") %>%
     html_table() %>% pluck(1) %>%
@@ -415,4 +475,89 @@ fetch_kpi_quarter<-function(id=id,key=key){
   return(output)
 }
 
+
+#' Fetch Insider
+#' 
+#' @param key Din börsdata API nyckel
+#' @param id Börsdata id
+#' @return fetch_insider
+#' @export
+#' @examples
+#' key = "<API KEY>"
+#' id = 750 # Exempel 750 för Evolution
+#' fetch_insider(id=750,key=key)
+#' @export
+#' @importFrom httr jsonlite rvest purrr lubridate
+fetch_insider<-function(id=id,key=key){
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/",241,"/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-tibble(id=map(values, 1), value=map(values, 3))
+  
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/242/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/243/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/244/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/245/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/246/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/247/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/248/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  insider_stage1<-paste0("https://apiservice.borsdata.se/v1/instruments/kpis/249/last/latest?authKey=",key)
+  insider_stage2<-httr::GET(insider_stage1)
+  content<-content(insider_stage2)
+  values<-content$values 
+  test<-left_join(test,tibble(id=map(values, 1), value=map(values, 3)),by = "id")
+  
+  colnames(test)<-c("bolagsnamn",1,2,3,4,5,6,7,8,9)
+  id=221
+  test3<-test %>% filter(bolagsnamn == id)
+  null<-purrr::pluck(test3,2) %>% unlist()
+  if(is.null(null)){
+    ingen_information<-"Saknar information från Börsdatas API om största kapitalägarna"
+  } else {
+    ingen_information<-NA
+    ingen_information<-test3 %>% select(-1) %>% matrix(nrow = 3) %>% 
+      unlist() %>% matrix(ncol=3) %>% as_tibble() %>% rename("Kapital" = V1,
+                                                             "Röster" = V2,
+                                                             "Ägare" = V3)
+    
+  }
+  return(ingen_information)
+}
 

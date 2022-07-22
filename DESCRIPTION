@@ -7,7 +7,9 @@ Imports:
     httr,
     jsonlite,
     dplyr,
-    rvest
+    rvest,
+    purrr,
+    lubridate
 Maintainer: Jakob Johannesson <jakob@jakobj.se>
 Description: Ansluter till Börsdatas API tjänst
 License: MIT
